@@ -1,0 +1,118 @@
+MAP
+    NAME "test"
+    STATUS ON
+    SIZE 800 600
+    PROJECTION
+        "init=epsg:4326"
+    END
+    EXTENT 73.451 18.1632 134.977 53.5319
+    UNITS DD
+    IMAGECOLOR 255 255 255
+    SHAPEPATH "../data"
+    FONTSET "../Font/font.list"
+    WEB
+        METADATA
+            "wms_title"           "WMS Demo Server"
+            "wms_onlineresource"  "http://127.0.0.1/cgi-bin/mapserv.exe?"
+            "wms_srs"             "EPSG:4326"
+            "wms_crs"             "EPSG:4326"
+            "wms_enable_request"  "*"
+            "wfs_title"           "WFS Demo Server for MapServer"
+            "wfs_onlineresource"  "http://127.0.0.1/cgi-bin/mapserv.exe?"
+            "wfs_srs"             "EPSG:4326"
+            "wfs_crs"             "EPSG:4326"
+            "wfs_enable_request"  "*"
+        END
+        IMAGEPATH "/ms4w/tmp/ms_tmp/"
+        IMAGEURL "/ms_tmp/"
+    END
+    LAYER
+        NAME "sheng"
+        VALIDATION
+            "z120401" "[0-9]+"
+        END
+        ENCODING "UTF-8"
+        METADATA
+            "wms_tilte" "sheng"
+            "WMS_FEATURE_INFO_MIME_TYPE" "text/html"
+        END
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost dbname=gisdata user=postgres password=huangw. port=5432"
+        TYPE POLYGON
+        STATUS ON
+        DATA "geom from (select s.* from sheng s where z120401>%z120401%) as subquery using unique gid using srid=4326"
+        PROJECTION
+            "init=epsg:4326"
+        END
+        LABELITEM 'name1'
+        CLASS
+            TEMPLATE "template.html"
+            NAME "sheng"
+            STYLE
+                COLOR 255 0 0
+                OUTLINECOLOR 0 255 0
+            END
+            LABEL
+                TYPE TRUETYPE
+                FONT "huawenxinkai"
+                SIZE 15
+                ANTIALIAS TRUE
+                POSITION CC
+                PARTIALS FALSE
+                MINDISTANCE 300
+                BUFFER 4
+            END
+        END
+    END
+    LAYER
+        NAME "selectSheng"
+        METADATA
+            "wms_tilte" "selectSheng"
+        END
+        VALIDATION
+            "x" "^[0-9]+[.]([0-9]+)?$"
+            'default_x' '100'
+            "y" "^[0-9]+([.][0-9]+)?$"
+            'default_y' '30'
+        END
+        TYPE POLYGON
+        STATUS ON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost dbname=gisdata user=postgres password=huangw. port=5432"
+        DATA "geom from (SELECT * FROM sheng WHERE st_contains(geom,st_geometryfromtext('POINT(%x% %y%)',4326))) as subquery using unique gid using srid=4326"
+        CLASS
+            NAME "selectSheng"
+            STYLE
+                OUTLINECOLOR 0 0 255
+                WIDTH 3
+            END
+        END
+    END
+    LAYER
+        NAME "vectorsheng"
+        ENCODING "UTF-8"
+        METADATA
+            "wfs_title"         "vectorSheng" ##REQUIRED
+            "wfs_crs"           "EPSG:4326" ## REQUIRED
+            "gml_include_items" "all" ## Optional (serves all attributes for layer)
+            "gml_featureid"     "gid" ## REQUIRED
+            "wfs_enable_request" "*"
+        END
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost dbname=gisdata user=postgres password=huangw. port=5432"
+        TYPE POLYGON
+        STATUS ON
+        DATA "geom from (select s.gid,s.geom,s.z120401,s.name,s.pinyin_nam,st_area(s.geom) as area,
+        st_perimeter(s.geom) as perimeter from sheng s where z120401>=0) as subquery using unique gid using srid=4326"
+        PROJECTION
+            "init=epsg:4326"
+        END
+        CLASS
+            NAME 'World Continents'
+            STYLE
+                COLOR 255 128 128
+                OUTLINECOLOR 96 96 96
+            END
+        END
+    END
+END

@@ -1,0 +1,91 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+html,body{
+    height: 100%;
+}
+body{
+    overflow: hidden;
+}
+#map{
+    width: 100%;
+    height: 100%;
+}
+#XY{
+    font-size: 25px;
+    background-color:rgba(255,255,255,0);
+    border: 0px;
+    z-index: auto;
+}
+footer{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    display: table-cell;
+    color: #ffffff;
+    vertical-align: middle;
+    height:auto;
+    width: 100%;
+    background-color:rgba(0,0,0,0.8);
+    z-index: auto;
+}
+.add{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: #ffffff;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+}
+.dialog hr{
+    color: #ffffff;
+}
+.dialog button{
+    height: 40px;
+}
+.dialog{
+    background-color: #cccccc;
+    margin:auto auto;
+    display: none;
+    width: 395px;
+    height: auto;
+    padding: 5px;
+    border-radius: 5px;
+}
+#footerAdd td{
+    border: #ffffff 1px solid;
+    width:200px;
+}
+#footerAdd th{
+    border: #b81900 1px solid;
+    width:200px;
+}
+.selected{
+    color: #00ff00;
+    font-family: "华文行楷";
+}
+::-webkit-scrollbar{width: 1px;}
+.overflow{
+    height:200px;
+}
+.clear{
+    clear: both;
+}
+header li{
+    padding: 10px;
+    float: left;
+}
+table{
+    height: 100%;
+}
+header{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height:100px;
+    width: 100%;
+    background-color:rgba(0,0,0,0.8);
+
+}
